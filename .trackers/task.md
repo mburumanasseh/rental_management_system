@@ -1,47 +1,55 @@
 # Current Task
 
-**Task name:** Initialize Engineer Mode trackers + fix broken scaffold import  
-**Goal:** Establish `.trackers/` for session continuity and remove the broken `TestModuleModule` reference so the application can start cleanly.  
-**Branch:** `chore/initialize-trackers-and-fix-scaffold` → PR into `dev`
+**Task name:** Foundation – Config, Database, Security & Health  
+**Goal:** Establish production-grade foundational infrastructure so all subsequent feature modules can be built on a solid base.  
+**Branch:** `feat/foundation-config-db-security` → PR into `dev`
 
 ## Approved Scope
-- Create `.trackers/repo-state.md`, `.trackers/task.md`, `.trackers/rollback.md`
-- Remove the non-existent `TestModuleModule` import and reference from `src/app.module.ts`
-- No other functional changes
+- Global configuration with environment validation (Joi)
+- PostgreSQL + TypeORM connection (async, env-driven)
+- Global validation pipe (whitelist + transform)
+- Helmet security headers
+- Rate limiting (Throttler)
+- Health check endpoints (`/health`, `/health/live`)
+- `.env.example` with all required variables
+- Clean module wiring in `AppModule`
 
-## Proposed / Completed Changes
-- [x] Create `.trackers/` directory and the three required files
-- [x] Clean `app.module.ts` of the broken TestModuleModule reference
+## Completed Changes
+- [x] `src/config/` – configuration factory + Joi validation schema + ConfigModule
+- [x] `src/database/` – TypeOrmModule.forRootAsync
+- [x] `src/health/` – Terminus health checks
+- [x] Updated `main.ts` – Helmet, ValidationPipe, CORS, ConfigService
+- [x] Updated `app.module.ts` – Config, Database, Health, ThrottlerGuard
+- [x] `.env.example`
+- [ ] Install required packages (in progress / to be verified)
 - [ ] Open PR to `dev`
 
 ## Explicitly Out of Scope
-- Implementing any business logic
-- Adding dependencies
-- Database setup
-- Auth implementation
-- Any feature work
+- Auth implementation (JWT strategy, guards, etc.)
+- Any domain entity or business logic
+- M-Pesa integration
+- Docker / CI
 
 ## Decisions Made
-- Use NestJS exclusively (user confirmed)
-- `dev` is the long-lived integration branch
-- Feature work happens on dedicated branches with PRs into `dev`
-- User reviews & merges PRs; user controls promotion from `dev` → `main`
+- TypeORM chosen over Prisma for native NestJS decorator support and mature ecosystem
+- Joi for env validation (simple, battle-tested with NestJS Config)
+- Global ThrottlerGuard applied by default
+- `DB_SYNCHRONIZE` defaults to `false` (safe for production)
+- Observe module left with placeholders (user can configure later)
 
 ## Risks
-- Low. Only removes a broken import and adds documentation files.
+- Medium if database is not available at startup (TypeORM will fail to connect). Mitigated by health checks and clear env docs.
+- JWT secrets are required by validation schema – app will refuse to start without them.
 
 ## Verification
-- `app.module.ts` no longer references missing module
-- `.trackers/` files present and accurate
-- Project still builds / starts after change (to be verified)
+- `npm install` of new packages succeeds
+- Application boots with a valid `.env`
+- `/health/live` returns 200
+- `/health` reports database status
+- Rate limiting active
+- ValidationPipe rejects unknown properties
 
-## Remaining Work (future tasks)
-1. Project foundation: config, database (PostgreSQL + TypeORM/Prisma), validation, security packages
-2. Auth module (JWT + refresh + RBAC)
-3. Users / Landlords / Tenants
-4. Properties & Units
-5. Leases
-6. Invoices
-7. Payments (M-Pesa, Paybill, reconciliation)
-8. Receipts, Notifications, Audit, Reports
-9. Production readiness
+## Remaining Work (next tasks)
+1. Auth module (JWT + Refresh + RBAC)
+2. Core entities (User, Landlord, Tenant, Property, Unit, Lease …)
+3. Subsequent domain modules

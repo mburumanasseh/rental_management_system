@@ -3,20 +3,20 @@
 **Last updated:** 2026-10-14
 
 ## Previous Known-Good State
-- **Branch:** `dev` (and `main`)
-- **Commit:** `ed29d7e` – "chore: scaffold rental management system architecture"
-- **Tag/Release:** none yet
+- **Branch:** `dev`
+- **Commit:** `bab6762` – Merge of PR #1 (trackers + TestModule fix)
 
-## How to Roll Back This Change
-1. Revert the PR that introduced `.trackers/` and the `app.module.ts` cleanup, **or**
-2. `git checkout ed29d7e -- .` on a new branch and force the desired state (not recommended on shared branches)
+## How to Roll Back This Foundation Change
+1. Revert the PR that introduces the foundation packages and modules, **or**
+2. `git revert <merge-commit>` on `dev` after merge.
 
 ## Migration / Data Considerations
-- None. No database changes. Pure documentation + one import cleanup.
+- No schema migrations yet (synchronize is off by default).
+- Adding TypeORM does not touch existing data.
 
 ## Irreversible Operations
 - None.
 
 ## Recovery Notes
-- The `.trackers/` directory is part of the engineering process. If removed accidentally, re-create from the latest known good version on `dev` or from this file set.
-- Application previously could not start cleanly because of the missing `TestModuleModule`. After this change it will start (with placeholder Observe credentials still present).
+- If the application fails to start because of missing JWT secrets, copy `.env.example` → `.env` and set proper secrets.
+- Database connection failure is expected if PostgreSQL is not running; use `/health/live` for liveness without DB.
