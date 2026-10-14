@@ -1,8 +1,16 @@
 import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
+
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { TestModuleModule } from './test-module/test-module.module.js';
+
+import { ConfigModule } from './config/config.module.js';
+import { DatabaseModule } from './database/database.module.js';
+import { HealthModule } from './health/health.module.js';
+
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { LandlordsModule } from './landlords/landlords.module.js';
@@ -21,14 +29,30 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
 @Module({
   imports: [
-    // Distributed tracing, auto-correlated logs, request/job metrics, error
-    // telemetry, alarms, and more — out of the box. Sign up at https://observe.nestjs.com
+    // Core infrastructure
+    ConfigModule,
+    DatabaseModule,
+    HealthModule,
+
+    // Rate limiting
+    ThrottlerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => [
+        {
+          ttl: config.get<number>('throttle.ttl') ?? 60,
+          limit: config.get<number>('throttle.limit') ?? 100,
+        },
+      ],
+    }),
+
+    // Observability (placeholder credentials – replace in production)
     ObserveModule.forRoot({
       appKey: 'YOUR_APP_KEY',
       appSecret: 'YOUR_APP_SECRET',
       serviceId: 'Rental_System',
     }),
-    TestModuleModule,
+
+    // Domain modules
     AuthModule,
     UsersModule,
     LandlordsModule,
@@ -44,6 +68,12 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ReportsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
