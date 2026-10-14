@@ -2,26 +2,13 @@
 
 **Last updated:** 2026-10-15
 
-## Repository
-- **URL:** https://github.com/mburumanasseh/rental_management_system.git
-- **Default branch:** `main`
-- **Integration branch:** `dev`
-- **Current branch:** `feat/auth-module`
+## Current branch
+`feat/landlords-tenants-properties-units` (based on feat/auth-module)
 
-## Current State
-- Foundation (config, TypeORM, security, health) is on both `main` and `dev`
-- Auth module implemented on this branch:
-  - User entity + Role enum
-  - JWT + Refresh token flow
-  - Guards, decorators, DTOs
-  - Register / Login / Refresh / Logout
-  - Protected `/users/me`
+## State
+- Auth module present (User, JWT, roles)
+- New domain modules: Landlords, Tenants, Properties, Units with full CRUD and relations
+- Foundation + trackers already on main/dev
 
-## Last known good
-- `main` / `dev` at `8446409` (after PR #3)
-
-## Environment / Deployment
-- Requires PostgreSQL and valid JWT secrets in `.env`
-
-## Observations
-- TypeORM synchronize still defaults to false – schema must be created (enable temporarily or add migrations later)
+## Note
+Auth PR (#4) is still open. This branch includes auth so it can be reviewed/merged after or together with auth.
