@@ -3,12 +3,8 @@
 **Last updated:** 2026-10-15
 
 ## Current branch
-`feat/landlords-tenants-properties-units` (based on feat/auth-module)
+`feat/leases-module` (from latest `dev`)
 
-## State
-- Auth module present (User, JWT, roles)
-- New domain modules: Landlords, Tenants, Properties, Units with full CRUD and relations
-- Foundation + trackers already on main/dev
-
-## Note
-Auth PR (#4) is still open. This branch includes auth so it can be reviewed/merged after or together with auth.
+## State on dev
+- Foundation + Auth + Landlords/Tenants/Properties/Units all merged
+- This branch adds Leases with business rules (overlap check, unit status updates)

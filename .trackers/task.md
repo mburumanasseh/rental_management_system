@@ -1,28 +1,23 @@
 # Current Task
 
-**Task name:** Landlords, Tenants, Properties & Units modules  
-**Goal:** Implement the core domain profiles and property hierarchy.  
-**Branch:** `feat/landlords-tenants-properties-units` → PR into `dev`  
-**Depends on:** `feat/auth-module` (must be merged first or together)
+**Task name:** Leases Module  
+**Goal:** Implement full lease lifecycle management.  
+**Branch:** `feat/leases-module` → PR into `dev`
 
 ## Scope
-- Landlord entity + full CRUD (linked 1:1 to User)
-- Tenant entity + full CRUD (linked 1:1 to User)
-- Property entity + full CRUD (belongs to Landlord)
-- Unit entity + full CRUD (belongs to Property, status: vacant/occupied/maintenance)
-- Role-based access on all endpoints
-- Proper TypeORM relations
+- Lease entity (unit, tenant, dates, rent, deposit, status, payment day)
+- Statuses: draft → active → expired / terminated / renewed
+- Create with overlap prevention
+- Activate (marks unit occupied)
+- Terminate (marks unit vacant + records reason)
+- Full CRUD + filters by unit/tenant/status
+- Role-based access
 
 ## Completed
-- [x] All entities, DTOs, services, controllers, modules
+- [x] Entity, DTOs, Service, Controller, Module
 - [ ] Build verification
 - [ ] Open PR
 
 ## Out of Scope
-- Lease creation
-- Invoice generation
-- Ownership checks beyond role (fine-grained ownership will come later)
-
-## Verification
-- `npm run build` succeeds
-- CRUD endpoints respond with proper auth/roles
+- Automatic invoice generation on activate (next module)
+- Lease renewal flow (can be added later)
