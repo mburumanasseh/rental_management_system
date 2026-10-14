@@ -1,23 +1,18 @@
 # Current Task
 
-**Task name:** Leases Module  
-**Goal:** Implement full lease lifecycle management.  
-**Branch:** `feat/leases-module` → PR into `dev`
+**Task name:** Invoices Module  
+**Goal:** Invoice generation and management linked to leases.  
+**Branch:** `feat/invoices-module` → PR into `dev`
 
 ## Scope
-- Lease entity (unit, tenant, dates, rent, deposit, status, payment day)
-- Statuses: draft → active → expired / terminated / renewed
-- Create with overlap prevention
-- Activate (marks unit occupied)
-- Terminate (marks unit vacant + records reason)
-- Full CRUD + filters by unit/tenant/status
-- Role-based access
+- Invoice + InvoiceLineItem entities
+- Types: rent, deposit, utility, penalty, other
+- Statuses: pending, partially_paid, paid, overdue, cancelled
+- Manual create + bulk generate rent invoices from active leases
+- Mark overdue job endpoint
+- Cancel + CRUD with guards against modifying paid invoices
+- Auto invoice number generation (INV-YYYY-XXXXXX)
 
 ## Completed
-- [x] Entity, DTOs, Service, Controller, Module
-- [ ] Build verification
-- [ ] Open PR
-
-## Out of Scope
-- Automatic invoice generation on activate (next module)
-- Lease renewal flow (can be added later)
+- [x] Entities, DTOs, Service, Controller, Module
+- [ ] Build + PR
