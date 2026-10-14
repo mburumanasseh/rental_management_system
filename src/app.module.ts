@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { TestModuleModule } from './test-module/test-module.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { LandlordsModule } from './landlords/landlords.module.js';
@@ -28,7 +27,6 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       appSecret: 'YOUR_APP_SECRET',
       serviceId: 'Rental_System',
     }),
-    TestModuleModule,
     AuthModule,
     UsersModule,
     LandlordsModule,
