@@ -1,23 +1,17 @@
 # Current Task
 
-**Task name:** Audit Logging + Reports  
-**Goal:** Immutable audit trail + key operational reports.  
-**Branch:** `feat/audit-module` → PR into `dev`  
-**Includes:** Notifications (dependency)
+**Task name:** Security hardening & production readiness  
+**Goal:** Make the system safer and deployable.  
+**Branch:** `chore/production-readiness` → PR into `dev`
 
 ## Scope
-### Audit
-- AuditLog entity (user, action, resource, old/new values, IP, user-agent)
-- AuditService + Admin-only endpoints
-- AuditInterceptor for automatic logging of mutating requests
+- Hardened `main.ts` (trust proxy, production-safe Helmet, configurable CORS, optional API prefix)
+- Expanded `.env.example` with production guidance
+- Multi-stage production `Dockerfile` + `.dockerignore`
+- `PRODUCTION.md` checklist
+- Includes Audit + Reports + Notifications (from previous branch)
 
-### Reports
-- Occupancy summary
-- Arrears summary
-- Cash-flow summary
-- Lease summary
-- Combined dashboard endpoint
-
-## Completed
-- [x] Both modules implemented
-- [ ] Build + PR
+## Out of Scope
+- Full TypeORM migrations setup (recommended next)
+- Attaching AuditInterceptor globally (left opt-in)
+- Real Nodemailer/SendGrid wiring
