@@ -1,16 +1,16 @@
 # Current Task
 
-**Task name:** Receipts Module  
-**Goal:** Issue official receipts linked 1:1 to completed payments.  
-**Branch:** `feat/receipts-module` → PR into `dev`
+**Task name:** Notifications Module  
+**Goal:** SMS + Email notification system with logging.  
+**Branch:** `feat/notifications-module` → PR into `dev`
 
 ## Scope
-- Receipt entity (1:1 with Payment)
-- Auto receipt number (RCP-YYYY-XXXXXX)
-- Issue only for completed payments
-- Prevent duplicate receipts
-- List / get by id or receipt number
+- Notification entity (channel, type, status, recipient, body, metadata)
+- SMS provider (Africa's Talking compatible, console fallback)
+- Email provider (console / SMTP placeholder)
+- Helper methods: sendPaymentReceived, sendPaymentReminder
+- Admin endpoints to send and list notifications
 
 ## Completed
-- [x] Entity, DTO, Service, Controller, Module
+- [x] Entity, DTO, Providers, Service, Controller, Module
 - [ ] Build + PR
