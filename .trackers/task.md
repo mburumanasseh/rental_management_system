@@ -1,18 +1,18 @@
 # Current Task
 
-**Task name:** Invoices Module  
-**Goal:** Invoice generation and management linked to leases.  
-**Branch:** `feat/invoices-module` → PR into `dev`
+**Task name:** Payments Module (M-Pesa + Reconciliation)  
+**Goal:** Accept payments via M-Pesa STK Push / C2B and reconcile against invoices.  
+**Branch:** `feat/payments-module` → PR into `dev`  
+**Depends on:** Invoices module (PR #7)
 
 ## Scope
-- Invoice + InvoiceLineItem entities
-- Types: rent, deposit, utility, penalty, other
-- Statuses: pending, partially_paid, paid, overdue, cancelled
-- Manual create + bulk generate rent invoices from active leases
-- Mark overdue job endpoint
-- Cancel + CRUD with guards against modifying paid invoices
-- Auto invoice number generation (INV-YYYY-XXXXXX)
+- Payment entity (invoice link, amount, method, status, M-Pesa fields)
+- STK Push initiation
+- STK + C2B callback handlers (public endpoints)
+- Automatic reconciliation → updates invoice amountPaid + status
+- Manual payment recording (cash/bank)
+- Role-protected listing endpoints
 
 ## Completed
-- [x] Entities, DTOs, Service, Controller, Module
+- [x] Entity, DTOs, MpesaService, PaymentsService, Controller, Module
 - [ ] Build + PR
